@@ -11,7 +11,7 @@ fs.readdirSync('node_modules').filter(function(x) {
 
 module.exports = {
 	entry: {
-		main: './src/server.js',
+		main: './src/main.js',
 	},
 	output: {
 		path: path.resolve(__dirname, 'build'),
