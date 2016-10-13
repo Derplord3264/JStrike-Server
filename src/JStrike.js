@@ -13,9 +13,22 @@ class JStrike {
 		this.clients = [];
 
 		this.cmd = {
-			show: '[players] show connected players, [games] show running games',
-			join: 'join a game'
+			show: '[players, games] show connected players / running games',
+			join: '[ID] join a game'
 		}
+
+		this.games = [
+			{
+				name: 'AWP India',
+				map: 'awp_india',
+				weapons: [
+					'ak-47-kalashnikov'
+				],
+				pos: [
+					{x: 0, y: 85, z: 0}
+				]
+			}
+		];
 	}
 
 	start() {

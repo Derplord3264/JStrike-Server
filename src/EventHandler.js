@@ -27,29 +27,51 @@ class EventHandler {
 	}
 
 	onShell(client, data) {
-		switch (data.cmd) {
-			case 'join':
-				this.server.emitShell(client, {
-					type: 'exec',
-					response: 'server responding to '+ data.argv[0]
-				});
-			break;
-			case 'show':
-				let str = `show: `;
+		let str = ``;
 
+		switch (data.cmd) {
+			case 'show':
 				if (data.argv.length > 0) {
 					switch (data.argv[0]) {
 						case 'players':
-							str += `${this.server.clients.length} connected players`;
+							str += `show: ${this.server.clients.length} connected players`;
 						break;
 						case 'games':
-							str += `x running games`;
+							for (let i in this.server.games) {
+								let game = this.server.games[i];
+
+								str += `\n${i}\t${game.name}\t${game.map}`;
+							}
 						break;
 						default:
-							str += `unknown argument '${data.argv[0]}'`
+							str += `show: unknown argument '${data.argv[0]}'`
 					}
 				} else {
-					str += `provide an argument to show`;
+					str += `show: provide an argument to show`;
+				}
+
+				this.server.emitShell(client, {
+					type: 'exec',
+					response: str
+				});
+			break;
+			case 'join':
+				if (data.argv.length > 0) {
+					let game_id = parseInt(data.argv[0]);
+
+					if (game_id >= 0 && game_id < this.server.games.length) {
+
+						client.join(game_id);
+						
+						this.server.emitShell(client, {
+							type: 'join',
+							response: this.server.games[game_id]
+						});
+					} else {
+						str += `join: invalid game id '${data.argv[0]}'`;
+					}
+				} else {
+					str += `join: provide a game ID to join`;
 				}
 
 				this.server.emitShell(client, {
