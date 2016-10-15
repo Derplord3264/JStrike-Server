@@ -24,9 +24,7 @@ class JStrike {
 				weapons: [
 					'ak-47-kalashnikov'
 				],
-				pos: [
-					{x: 0, y: 85, z: 0}
-				]
+				pos: {x: 0, y: 85, z: 0}
 			}
 		];
 	}
@@ -46,6 +44,10 @@ class JStrike {
 
 	emitShell(client, data) {
 		client.emit('shell', data);
+	}
+
+	emitGame(client, game_id, data) {
+		client.broadcast.to(game_id).emit(data.type, data.data);
 	}
 
 }
