@@ -24,7 +24,7 @@ class JStrike {
 				weapons: [
 					'ak-47-kalashnikov'
 				],
-				pos: {x: 0, y: 85, z: 0}
+				pos: {x: 0, y: 140, z: 0}
 			}
 		];
 	}

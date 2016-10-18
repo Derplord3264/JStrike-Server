@@ -13,7 +13,7 @@ class EventHandler {
 			cmd: this.server.cmd
 		});
 
-		client.on('disconnecting', (data) => this.onDisconnecting(client));
+		client.on('disconnecting', () => this.onDisconnecting(client));
 		client.on('shell', (data) => this.onShell(client, data));
 		client.on('move', (data) => this.onMove(client, data));
 
@@ -23,7 +23,7 @@ class EventHandler {
 	onDisconnecting(client) {
 		let game_id = Object.keys(client.rooms)[0];
 		let dc_client = this.server.clients.indexOf(client.id);
-		
+
 		this.server.io.sockets.in(game_id).emit('disconnecting', client.id);
 		this.server.clients.splice(dc_client, 1);
 
@@ -68,11 +68,19 @@ class EventHandler {
 
 						/* Join client to game */
 						client.join(game_id);
+						client.pos = this.server.games[game_id].pos;
 
 						/* Send game info to client */
+						var sioRoom = this.server.io.sockets.adapter.rooms[game_id];
+						if(sioRoom) { 
+							console.log(sioRoom.sockets);
+						}
 						this.server.emitShell(client, {
 							type: 'join',
-							response: this.server.games[game_id]
+							response: {
+								config: this.server.games[game_id],
+								enemies: null
+							}
 						});
 
 						/* Broadcast to game room about new player */
@@ -80,7 +88,7 @@ class EventHandler {
 							type: 'join',
 							data: {
 								id: client.id,
-								pos: this.server.games[game_id].pos
+								pos: client.pos
 							}
 						});
 
