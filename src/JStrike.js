@@ -21,10 +21,20 @@ class JStrike {
 			{
 				name: 'AWP India',
 				map: 'awp_india',
-				weapons: [
-					'ak-47-kalashnikov'
-				],
+				weapon: {
+					primary: 'ak-47-kalashnikov',
+					secondary: 'm1911-handgun'
+				},
 				pos: {x: 0, y: 140, z: 0}
+			},
+			{
+				name: 'CS Italy',
+				map: 'cs_italy',
+				weapon: {
+					primary: 'ak-47-kalashnikov',
+					secondary: 'm1911-handgun'
+				},
+				pos: {x: 0, y: 1400, z: 0}
 			}
 		];
 	}
