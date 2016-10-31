@@ -4,7 +4,7 @@
   "description": "Node JStrike server.",
   "main": "server.js",
   "scripts": {
-    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress",
+    "heroku-postbuild": "webpack --config ./webpack.config.js --progress",
     "start": "node build/main.bundle.js",
     "webpack": "webpack"
   },
