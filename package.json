@@ -4,6 +4,7 @@
   "description": "Node JStrike server.",
   "main": "server.js",
   "scripts": {
+    "start": "node build/main.bundle.js",
     "webpack": "webpack"
   },
   "repository": {
