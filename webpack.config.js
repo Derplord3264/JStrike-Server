@@ -1,11 +1,9 @@
-var webpack = require('webpack');
-var path = require('path');
-var fs = require('fs');
+const webpack = require('webpack');
+const path = require('path');
+const fs = require('fs');
 
-var nodeModules = {};
-fs.readdirSync('node_modules').filter(function(x) {
-	return ['.bin'].indexOf(x) === -1;
-}).forEach(function(mod) {
+const nodeModules = {};
+fs.readdirSync('node_modules').filter(x => ['.bin'].indexOf(x) === -1).forEach(mod => {
 	nodeModules[mod] = 'commonjs ' + mod;
 });
 
@@ -20,12 +18,14 @@ module.exports = {
 	externals: nodeModules,
 	target: 'node',
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.js$/,
-				loader: 'babel-loader',
-				query: {
-					presets: ['es2015']
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
 				}
 			}
 		]
