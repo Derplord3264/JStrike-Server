@@ -1,4 +1,3 @@
-
 class EventHandler {
 
 	constructor(server) {
@@ -21,8 +20,8 @@ class EventHandler {
 	}
 
 	onDisconnecting(client) {
-		let game_id = Object.keys(client.rooms)[0];
-		let dc_client = this.server.clients.indexOf(client.id);
+		const game_id = Object.keys(client.rooms)[0];
+		const dc_client = this.server.clients.indexOf(client.id);
 
 		this.server.io.sockets.in(game_id).emit('disconnecting', client.id);
 		this.server.clients.splice(dc_client, 1);
@@ -41,8 +40,8 @@ class EventHandler {
 							str += `show: ${this.server.clients.length} connected players`;
 						break;
 						case 'games':
-							for (let i in this.server.games) {
-								let game = this.server.games[i];
+							for (const i in this.server.games) {
+								const game = this.server.games[i];
 
 								str += `\n|| ${i} || ${game.name} || ${game.map} ||`;
 							}
@@ -61,7 +60,7 @@ class EventHandler {
 			break;
 			case 'join':
 				if (data.argv.length > 0) {
-					let game_id = parseInt(data.argv[0]);
+					const game_id = parseInt(data.argv[0]);
 
 					/* Valid game ID */
 					if (game_id >= 0 && game_id < this.server.games.length) {
@@ -71,7 +70,7 @@ class EventHandler {
 						client.pos = this.server.games[game_id].pos;
 
 						/* Send game info to client */
-						var sioRoom = this.server.io.sockets.adapter.rooms[game_id];
+						const sioRoom = this.server.io.sockets.adapter.rooms[game_id];
 						if(sioRoom) { 
 							console.log(sioRoom.sockets);
 						}
@@ -113,7 +112,7 @@ class EventHandler {
 	}
 
 	onMove(client, data) {
-		let game_id = Object.keys(client.rooms)[0];
+		const game_id = Object.keys(client.rooms)[0];
 
 		this.server.emitGame(client, game_id, {
 			type: 'move',
