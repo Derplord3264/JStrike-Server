@@ -62,4 +62,4 @@ class JStrike {
 
 }
 
-export let Server = new JStrike;
+export const Server = new JStrike;
